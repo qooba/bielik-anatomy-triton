@@ -2,7 +2,7 @@
 
 A hands-on video series where we implement the Polish language model **Bielik 1.5B** from scratch using custom GPU kernels written in [Triton](https://triton-lang.org/). Every component — from matrix multiplication to text generation — is built step by step, optimized, and benchmarked against PyTorch.
 
-**Model:** [Bielik-1.5B-v3.0-Instruct](https://huggingface.co/bielik-ai/Bielik-1.5B-v3.0-Instruct) (1.6B parameters, Polish)
+**Model:** [Bielik-1.5B-v3.0-Instruct](https://huggingface.co/speakleash/Bielik-1.5B-v3.0-Instruct) (1.6B parameters, Polish)
 
 ---
 

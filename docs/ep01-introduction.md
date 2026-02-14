@@ -28,7 +28,7 @@ The opening episode of the Bielik Anatomy series. We look at the architecture of
 
 ## References
 
-- [Bielik model on HuggingFace](https://huggingface.co/bielik-ai/Bielik-1.5B-v3.0-Instruct)
+- [Bielik model on HuggingFace](https://huggingface.co/speakleash/Bielik-1.5B-v3.0-Instruct)
 - [Triton documentation](https://triton-lang.org/)
 - [SpeakLeash community](https://speakleash.org/)
 
