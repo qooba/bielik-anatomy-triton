@@ -4,7 +4,7 @@
 
 ---
 
-[![Episode 1: Introduction](https://img.youtube.com/vi/kyM2HOAOrOM/maxresdefault.jpg)](https://www.youtube.com/watch?v=kyM2HOAOrOM)
+[![Episode 1: Introduction](https://img.youtube.com/vi/kyM2HOAOrOM/sddefault.jpg)](https://www.youtube.com/watch?v=kyM2HOAOrOM)
 
 ## Overview
 
