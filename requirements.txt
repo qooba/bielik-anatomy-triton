@@ -1,0 +1,5 @@
+# Triton - GPU kernel compiler
+triton>=2.1.0
+
+# PyTorch - Required by Triton for kernel compilation
+torch>=2.0.0
