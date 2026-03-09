@@ -22,7 +22,7 @@ from matmul.matmul_basic import matmul_kernel as matmul_basic_kernel
 class FP32vsBF16Benchmark:
     """Compare Triton Basic FP32 vs PyTorch BF16."""
 
-    def __init__(self, device: str = 'cuda', warmup: int = 10, iterations: int = 100):
+    def __init__(self, device: str = "cuda", warmup: int = 10, iterations: int = 100):
         self.device = device
         self.warmup = warmup
         self.iterations = iterations
@@ -73,11 +73,18 @@ class FP32vsBF16Benchmark:
         # Warmup
         for _ in range(self.warmup):
             matmul_basic_kernel[grid](
-                a, b, c,
-                M, N, K,
-                a.stride(0), a.stride(1),
-                b.stride(0), b.stride(1),
-                c.stride(0), c.stride(1),
+                a,
+                b,
+                c,
+                M,
+                N,
+                K,
+                a.stride(0),
+                a.stride(1),
+                b.stride(0),
+                b.stride(1),
+                c.stride(0),
+                c.stride(1),
                 BLOCK_SIZE_M=BLOCK_M,
                 BLOCK_SIZE_N=BLOCK_N,
                 BLOCK_SIZE_K=BLOCK_K,
@@ -88,11 +95,18 @@ class FP32vsBF16Benchmark:
         start = time.time()
         for _ in range(self.iterations):
             matmul_basic_kernel[grid](
-                a, b, c,
-                M, N, K,
-                a.stride(0), a.stride(1),
-                b.stride(0), b.stride(1),
-                c.stride(0), c.stride(1),
+                a,
+                b,
+                c,
+                M,
+                N,
+                K,
+                a.stride(0),
+                a.stride(1),
+                b.stride(0),
+                b.stride(1),
+                c.stride(0),
+                c.stride(1),
                 BLOCK_SIZE_M=BLOCK_M,
                 BLOCK_SIZE_N=BLOCK_N,
                 BLOCK_SIZE_K=BLOCK_K,
@@ -128,15 +142,19 @@ class FP32vsBF16Benchmark:
 
         print(f"\nTriton FP32 vs PyTorch BF16: {speedup:.2f}x ({tflops_ratio:.1f}% of BF16 TFLOPS)")
 
-        self.results.append({
-            'M': M, 'N': N, 'K': K,
-            'description': description,
-            'triton_fp32_ms': triton_time,
-            'triton_fp32_tflops': triton_tflops,
-            'pytorch_bf16_ms': pytorch_time,
-            'pytorch_bf16_tflops': pytorch_tflops,
-            'speedup': speedup,
-        })
+        self.results.append(
+            {
+                "M": M,
+                "N": N,
+                "K": K,
+                "description": description,
+                "triton_fp32_ms": triton_time,
+                "triton_fp32_tflops": triton_tflops,
+                "pytorch_bf16_ms": pytorch_time,
+                "pytorch_bf16_tflops": pytorch_tflops,
+                "speedup": speedup,
+            }
+        )
 
     def print_summary(self):
         """Print summary table."""
@@ -159,9 +177,9 @@ class FP32vsBF16Benchmark:
 
 
 def main():
-    print("="*70)
+    print("=" * 70)
     print("BENCHMARK: Triton Basic (FP32) vs PyTorch (BF16)")
-    print("="*70)
+    print("=" * 70)
 
     benchmark = FP32vsBF16Benchmark(warmup=5, iterations=50)
 
@@ -178,9 +196,9 @@ def main():
 
     benchmark.print_summary()
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("BENCHMARK COMPLETE")
-    print("="*70)
+    print("=" * 70)
 
 
 if __name__ == "__main__":

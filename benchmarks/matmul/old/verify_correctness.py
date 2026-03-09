@@ -10,11 +10,11 @@ Tests various matrix sizes and reports pass/fail with detailed error metrics.
 Returns exit code 0 if all tests pass, 1 otherwise.
 """
 
-import sys
 import os
-from pathlib import Path
+import sys
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from pathlib import Path
+from typing import List, Optional, Tuple
 
 import torch
 import triton
@@ -23,13 +23,14 @@ import triton
 REPO_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "kernels"))
 
-from matmul.matmul_basic import matmul_kernel as matmul_basic_kernel
 from matmul.matmul import matmul as matmul_tiled_kernel
+from matmul.matmul_basic import matmul_kernel as matmul_basic_kernel
 
 
 @dataclass
 class TestResult:
     """Single test result."""
+
     name: str
     M: int
     N: int
@@ -50,12 +51,12 @@ class MatmulVerifier:
     # These values are empirically determined from comparing Triton vs cuBLAS.
     # BF16 has only 7 bits mantissa (vs 23 for FP32), so larger errors are expected.
     BASE_TOLERANCES = {
-        'float32': {'max_rel': 1e-2, 'base_abs': 5e-3},  # FP32: accumulation order
-        'bfloat16': {'max_rel': 5e-2, 'base_abs': 4e-2}, # BF16: 7-bit mantissa
-        'float16': {'max_rel': 2e-2, 'base_abs': 5e-3},  # FP16: 10-bit mantissa
+        "float32": {"max_rel": 1e-2, "base_abs": 5e-3},  # FP32: accumulation order
+        "bfloat16": {"max_rel": 5e-2, "base_abs": 4e-2},  # BF16: 7-bit mantissa
+        "float16": {"max_rel": 2e-2, "base_abs": 5e-3},  # FP16: 10-bit mantissa
     }
 
-    def __init__(self, device: str = 'cuda'):
+    def __init__(self, device: str = "cuda"):
         self.device = device
         self.results: List[TestResult] = []
 
@@ -80,11 +81,18 @@ class MatmulVerifier:
             return (triton.cdiv(M, BLOCK_M) * triton.cdiv(N, BLOCK_N),)
 
         matmul_basic_kernel[grid](
-            a, b, c,
-            M, N, K,
-            a.stride(0), a.stride(1),
-            b.stride(0), b.stride(1),
-            c.stride(0), c.stride(1),
+            a,
+            b,
+            c,
+            M,
+            N,
+            K,
+            a.stride(0),
+            a.stride(1),
+            b.stride(0),
+            b.stride(1),
+            c.stride(0),
+            c.stride(1),
             BLOCK_SIZE_M=BLOCK_M,
             BLOCK_SIZE_N=BLOCK_N,
             BLOCK_SIZE_K=BLOCK_K,
@@ -101,18 +109,27 @@ class MatmulVerifier:
         c = torch.empty((M, N), device=a.device, dtype=a.dtype)
 
         def grid(META):
-            return (triton.cdiv(M, META['BLOCK_SIZE_M']) * triton.cdiv(N, META['BLOCK_SIZE_N']),)
+            return (triton.cdiv(M, META["BLOCK_SIZE_M"]) * triton.cdiv(N, META["BLOCK_SIZE_N"]),)
 
         matmul_tiled_kernel[grid](
-            a, b, c,
-            M, N, K,
-            a.stride(0), a.stride(1),
-            b.stride(0), b.stride(1),
-            c.stride(0), c.stride(1),
+            a,
+            b,
+            c,
+            M,
+            N,
+            K,
+            a.stride(0),
+            a.stride(1),
+            b.stride(0),
+            b.stride(1),
+            c.stride(0),
+            c.stride(1),
         )
         return c
 
-    def compare_tensors(self, result: torch.Tensor, expected: torch.Tensor, dtype_name: str, K: int) -> Tuple[bool, float, float, float]:
+    def compare_tensors(
+        self, result: torch.Tensor, expected: torch.Tensor, dtype_name: str, K: int
+    ) -> Tuple[bool, float, float, float]:
         """Compare two tensors and return (passed, max_abs, mean_abs, max_rel).
 
         Tolerance scales with sqrt(K) because matmul accumulates K products,
@@ -132,18 +149,19 @@ class MatmulVerifier:
 
         # Scale tolerance with sqrt(K) for accumulation error
         import math
+
         tol = self.BASE_TOLERANCES[dtype_name]
         scale_factor = math.sqrt(K)
-        max_abs_tol = tol['base_abs'] * scale_factor
+        max_abs_tol = tol["base_abs"] * scale_factor
 
-        passed = (max_rel_diff < tol['max_rel']) or (max_abs_diff < max_abs_tol)
+        passed = (max_rel_diff < tol["max_rel"]) or (max_abs_diff < max_abs_tol)
 
         return passed, max_abs_diff, mean_abs_diff, max_rel_diff
 
     def verify_basic_kernel(self, M: int, N: int, K: int) -> TestResult:
         """Verify matmul_basic kernel against PyTorch."""
         dtype = torch.float32
-        dtype_name = 'float32'
+        dtype_name = "float32"
         name = f"matmul_basic ({M}x{K} @ {K}x{N})"
 
         try:
@@ -158,11 +176,15 @@ class MatmulVerifier:
             c_pytorch = torch.matmul(a, b)
 
             # Compare
-            passed, max_abs, mean_abs, max_rel = self.compare_tensors(c_triton, c_pytorch, dtype_name, K)
+            passed, max_abs, mean_abs, max_rel = self.compare_tensors(
+                c_triton, c_pytorch, dtype_name, K
+            )
 
             return TestResult(
                 name=name,
-                M=M, N=N, K=K,
+                M=M,
+                N=N,
+                K=K,
                 dtype=dtype_name,
                 passed=passed,
                 max_abs_diff=max_abs,
@@ -173,18 +195,22 @@ class MatmulVerifier:
         except Exception as e:
             return TestResult(
                 name=name,
-                M=M, N=N, K=K,
+                M=M,
+                N=N,
+                K=K,
                 dtype=dtype_name,
                 passed=False,
-                max_abs_diff=float('inf'),
-                mean_abs_diff=float('inf'),
-                max_rel_diff=float('inf'),
+                max_abs_diff=float("inf"),
+                mean_abs_diff=float("inf"),
+                max_rel_diff=float("inf"),
                 error_msg=str(e),
             )
 
-    def verify_tensorcore_kernel(self, M: int, N: int, K: int, dtype: torch.dtype = torch.bfloat16) -> TestResult:
+    def verify_tensorcore_kernel(
+        self, M: int, N: int, K: int, dtype: torch.dtype = torch.bfloat16
+    ) -> TestResult:
         """Verify matmul_tiled_tensorcore kernel against PyTorch."""
-        dtype_name = str(dtype).split('.')[-1]
+        dtype_name = str(dtype).split(".")[-1]
         name = f"matmul_tensorcore ({M}x{K} @ {K}x{N}, {dtype_name})"
 
         try:
@@ -199,11 +225,15 @@ class MatmulVerifier:
             c_pytorch = torch.matmul(a, b)
 
             # Compare
-            passed, max_abs, mean_abs, max_rel = self.compare_tensors(c_triton, c_pytorch, dtype_name, K)
+            passed, max_abs, mean_abs, max_rel = self.compare_tensors(
+                c_triton, c_pytorch, dtype_name, K
+            )
 
             return TestResult(
                 name=name,
-                M=M, N=N, K=K,
+                M=M,
+                N=N,
+                K=K,
                 dtype=dtype_name,
                 passed=passed,
                 max_abs_diff=max_abs,
@@ -214,12 +244,14 @@ class MatmulVerifier:
         except Exception as e:
             return TestResult(
                 name=name,
-                M=M, N=N, K=K,
+                M=M,
+                N=N,
+                K=K,
                 dtype=dtype_name,
                 passed=False,
-                max_abs_diff=float('inf'),
-                mean_abs_diff=float('inf'),
-                max_rel_diff=float('inf'),
+                max_abs_diff=float("inf"),
+                mean_abs_diff=float("inf"),
+                max_rel_diff=float("inf"),
                 error_msg=str(e),
             )
 
@@ -243,16 +275,16 @@ class MatmulVerifier:
             # Non-square matrices
             (128, 256, 64),
             (256, 128, 512),
-            (1, 1024, 1024),      # Single row
-            (1024, 1, 1024),      # Single column
+            (1, 1024, 1024),  # Single row
+            (1024, 1, 1024),  # Single column
             # Non-power-of-2 (edge cases)
             (127, 127, 127),
             (257, 257, 257),
             (100, 200, 300),
             # Bielik-like shapes
-            (1, 1536, 1536),      # Single token Q proj
-            (128, 1536, 1536),    # Batch Q proj
-            (128, 1536, 8960),    # FFN gate proj
+            (1, 1536, 1536),  # Single token Q proj
+            (128, 1536, 1536),  # Batch Q proj
+            (128, 1536, 8960),  # FFN gate proj
         ]
 
         # Test matmul_basic (FP32)
@@ -297,9 +329,11 @@ class MatmulVerifier:
             print(f"  {symbol} {result.name}: ERROR - {result.error_msg}")
         else:
             print(f"  {symbol} {result.name}")
-            print(f"       max_abs={result.max_abs_diff:.2e}, "
-                  f"mean_abs={result.mean_abs_diff:.2e}, "
-                  f"max_rel={result.max_rel_diff:.2e}")
+            print(
+                f"       max_abs={result.max_abs_diff:.2e}, "
+                f"mean_abs={result.mean_abs_diff:.2e}, "
+                f"max_rel={result.max_rel_diff:.2e}"
+            )
 
     def _print_summary(self) -> bool:
         """Print test summary. Returns True if all tests passed."""

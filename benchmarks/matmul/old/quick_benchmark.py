@@ -5,26 +5,26 @@ Quick matmul benchmark - fewer test cases, faster execution.
 Use this for quick validation during development.
 """
 
-import sys
 import os
+import sys
 from pathlib import Path
 
 # Add kernels directory to path
 REPO_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT / "benchmarks" / "matmul"))
 
-from benchmark_matmul import MatmulBenchmark
 import torch
+from benchmark_matmul import MatmulBenchmark
 
 
 def main():
     """Run quick benchmarks on key test cases."""
-    print("="*80)
+    print("=" * 80)
     print("QUICK MATMUL BENCHMARK")
-    print("="*80)
+    print("=" * 80)
     print("\nRunning reduced test suite (warmup=5, iterations=50)")
     print("For full benchmark, run: python benchmark_matmul.py")
-    print("="*80)
+    print("=" * 80)
 
     # Quick benchmark with fewer iterations
     benchmark = MatmulBenchmark(warmup=5, iterations=50)
@@ -49,9 +49,9 @@ def main():
     # Print summary
     benchmark.print_summary_table()
 
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("QUICK BENCHMARK COMPLETE!")
-    print("="*80)
+    print("=" * 80)
     print("\nFor comprehensive results, run: python benchmark_matmul.py")
 
 
