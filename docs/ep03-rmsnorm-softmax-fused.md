@@ -6,8 +6,8 @@
 
 
 <p align="center">
-    <a href="https://www.youtube.com/watch?v=pgLclXhDVDk">
-        <img src="https://img.youtube.com/vi/pgLclXhDVDk/sddefault.jpg" alt="Episode 3: Fused RMSNorm & SoftMax" style="max-width: 100%;">
+    <a href="https://www.youtube.com/watch?v=FD_xre7abZU">
+        <img src="https://img.youtube.com/vi/FD_xre7abZU/sddefault.jpg" alt="Episode 3: Fused RMSNorm & SoftMax" style="max-width: 100%;">
     </a>
 </p>
 
