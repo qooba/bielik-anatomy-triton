@@ -25,7 +25,7 @@ Matrix multiplication is the single most frequent operation in a transformer - B
 ```bash
 make benchmark-matmul
 ```
-![tflops vs size](/docs/plots/matmul-tflops-vs-size.png)
+![tflops vs size](/docs/plots/matmul/matmul-tflops-vs-size.png)
 
 ## Relevant Code
 
