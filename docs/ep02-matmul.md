@@ -4,7 +4,11 @@
 
 ---
 
-[![Episode 1: Introduction](https://img.youtube.com/vi/W8NFUvYX-u8/sddefault.jpg)](https://www.youtube.com/watch?v=W8NFUvYX-u8)
+<p align="center">
+    <a href="https://www.youtube.com/watch?v=W8NFUvYX-u8">
+        <img src="https://img.youtube.com/vi/W8NFUvYX-u8/sddefault.jpg" alt="Episode 1: Introduction" style="max-width: 100%;">
+    </a>
+</p>
 
 ## Overview
 
@@ -25,7 +29,11 @@ Matrix multiplication is the single most frequent operation in a transformer - B
 ```bash
 make benchmark-matmul
 ```
-![tflops vs size](/docs/plots/matmul/matmul-tflops-vs-size.png)
+
+<p align="center">
+    <img src="/docs/plots/matmul/matmul-tflops-vs-size.png" alt="tflops vs size" style="max-width: 100%;">
+</p>
+
 
 ## Relevant Code
 
