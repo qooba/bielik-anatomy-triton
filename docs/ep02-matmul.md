@@ -20,6 +20,13 @@ Matrix multiplication is the single most frequent operation in a transformer - B
 - **Optimization 3: Tensor Cores** - switching from FP32 to BF16 to engage hardware matrix units; 16x throughput gain; FP32 accumulator for numerical stability
 - **Optimization 4: Pipeline and occupancy** - 5-stage pipeline to overlap loads with compute, 8 warps for better GPU occupancy
 
+## Benchmarks
+
+```bash
+make benchmark-matmul
+```
+![tflops vs size](/docs/plots/matmul-tflops-vs-size.png)
+
 ## Relevant Code
 
 ### Kernels
