@@ -1,6 +1,6 @@
 # Episode 2: Matmul - Heart of the Transformer
 
-[Back to Series Overview](/README.md) | [Previous: Introduction](/docs/ep01-introduction.md) | [Next: RMSNorm and Softmax](/docs/ep03-rmsnorm-softmax.md)
+[Back to Series Overview](/README.md) | [Previous: Introduction](/docs/ep01-introduction.md) | [Next: RMSNorm and Softmax](/docs/ep03-rmsnorm-softmax-fused.md)
 
 ---
 
@@ -24,11 +24,26 @@ Matrix multiplication is the single most frequent operation in a transformer - B
 - **Optimization 3: Tensor Cores** - switching from FP32 to BF16 to engage hardware matrix units; 16x throughput gain; FP32 accumulator for numerical stability
 - **Optimization 4: Pipeline and occupancy** - 5-stage pipeline to overlap loads with compute, 8 warps for better GPU occupancy
 
+## Relevant Code
+
+### Kernels
+- [`kernels/matmul/matmul_basic.py`](/kernels/matmul/matmul_basic.py) - naive implementation
+- [`kernels/matmul/matmul.py`](/kernels/matmul/matmul.py) - Tensor Core optimized with auto-tuning
+
+### Benchmarks
+- [`benchmarks/matmul/benchmark_matmul.py`](/benchmarks/matmul/benchmark_matmul.py) - performance comparison script
+- [`benchmarks/matmul/verify_correctness.py`](/benchmarks/matmul/verify_correctness.py) - numerical correctness tests
+
 ## Benchmarks
 
+- [`benchmarks/matmul/benchmark_matmul_guide.py`](/benchmarks/matmul/benchmark_matmul_guide.py)
+
+To run benchmarks use:
 ```bash
 make benchmark-matmul
 ```
+
+### Results on my RTX 4060 Ti
 
 <p align="center">
     <img src="/docs/plots/matmul/matmul-tflops-vs-size.png" alt="tflops vs size" style="max-width: 100%;">
@@ -40,16 +55,6 @@ make benchmark-matmul
 
 
 
-## Relevant Code
-
-### Kernels
-- [`kernels/matmul/matmul_basic.py`](/kernels/matmul/matmul_basic.py) - naive implementation
-- [`kernels/matmul/matmul.py`](/kernels/matmul/matmul.py) - Tensor Core optimized with auto-tuning
-
-### Benchmarks
-- [`benchmarks/matmul/benchmark_matmul.py`](/benchmarks/matmul/benchmark_matmul.py) - performance comparison script
-- [`benchmarks/matmul/verify_correctness.py`](/benchmarks/matmul/verify_correctness.py) - numerical correctness tests
-
 ## References
 
 - [Triton Matrix Multiplication Tutorial](https://triton-lang.org/main/getting-started/tutorials/03-matrix-multiplication.html)
@@ -57,4 +62,4 @@ make benchmark-matmul
 
 ---
 
-[Back to Series Overview](/README.md) | [Previous: Introduction](/docs/ep01-introduction.md) | [Next: RMSNorm and Softmax](/docs/ep03-rmsnorm-softmax.md)
+[Back to Series Overview](/README.md) | [Previous: Introduction](/docs/ep01-introduction.md) | [Next: RMSNorm and Softmax](/docs/ep03-rmsnorm-softmax-fused.md)

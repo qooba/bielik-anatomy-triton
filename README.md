@@ -12,7 +12,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 |---|---------|------------|-----|
 | 01 | [Introduction — Bielik Architecture and Triton](/docs/ep01-introduction.md) | Architecture overview, GQA, SwiGLU, why Triton | [link](/docs/ep01-introduction.md) |
 | 02 | [Matmul — Heart of the Transformer](/docs/ep02-matmul.md) | Tiled matmul with Tensor Cores, matching PyTorch perf | [link](/docs/ep02-matmul.md) |
-
+| 03 | [Just Fuse It - Fused RMSNorm & Softmax](/docs/ep03-rmsnorm-softmax-fused.md) | Fused single-pass RMSNorm and Softmax with casual mask  | [link](/docs/ep03-rmsnorm-softmax-fused.md) |
 ---
 
 ## What You Will Learn
@@ -49,7 +49,4 @@ cd bielik-anatomy-triton
 # Install dependencies
 pip install -r requirements.txt
 
-# Run a kernel benchmark
-cd benchmarks/matmul
-python benchmark_matmul.py
 ```
