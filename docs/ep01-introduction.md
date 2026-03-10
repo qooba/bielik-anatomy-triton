@@ -4,7 +4,11 @@
 
 ---
 
-[![Episode 1: Introduction](https://img.youtube.com/vi/kyM2HOAOrOM/sddefault.jpg)](https://www.youtube.com/watch?v=kyM2HOAOrOM)
+<p align="center">
+    <a href="https://www.youtube.com/watch?v=kyM2HOAOrOM">
+        <img src="https://img.youtube.com/vi/kyM2HOAOrOM/sddefault.jpg" alt="Episode 1: Introduction" style="max-width: 100%;">
+    </a>
+</p>
 
 ## Overview
 

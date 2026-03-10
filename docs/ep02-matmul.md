@@ -6,7 +6,7 @@
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=W8NFUvYX-u8">
-        <img src="https://img.youtube.com/vi/W8NFUvYX-u8/sddefault.jpg" alt="Episode 1: Introduction" style="max-width: 100%;">
+        <img src="https://img.youtube.com/vi/W8NFUvYX-u8/sddefault.jpg" alt="Episode 2: Matmul" style="max-width: 100%;">
     </a>
 </p>
 
@@ -33,6 +33,11 @@ make benchmark-matmul
 <p align="center">
     <img src="/docs/plots/matmul/matmul-tflops-vs-size.png" alt="tflops vs size" style="max-width: 100%;">
 </p>
+
+<p align="center">
+    <img src="/docs/plots/matmul/matmul-summary-bielik-shapes-tflops.png" alt="tflops vs size summary" style="max-width: 100%;">
+</p>
+
 
 
 ## Relevant Code
