@@ -79,11 +79,11 @@ make benchmark-softmax
 </p>
 
 <p align="center">
-    <img src="/docs/plots/normalization/softmax-causal-bandwidth-vs-seq-len.png" alt="softmax-causal-bandwidth-vs-seq-len" style="max-width: 100%;">
+    <img src="/docs/plots/attention/softmax-causal-bandwidth-vs-seq-len.png" alt="softmax-causal-bandwidth-vs-seq-len" style="max-width: 100%;">
 </p>
 
 <p align="center">
-    <img src="/docs/plots/normalization/softmax_causal-summary-bielik-config-tflops.png" alt="softmax_causal-summary-bielik-config-tflops" style="max-width: 100%;">
+    <img src="/docs/plots/attention/softmax_causal-summary-bielik-config-tflops.png" alt="softmax_causal-summary-bielik-config-tflops" style="max-width: 100%;">
 </p>
 
 
