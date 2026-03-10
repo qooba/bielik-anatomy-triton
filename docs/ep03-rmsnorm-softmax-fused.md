@@ -37,7 +37,7 @@ RMSNorm runs 65 times per Bielik forward pass; softmax runs 32 times. Individual
 
 - [`kernels/normalization/rms_norm_simple.py`](/kernels/normalization/rms_norm_simple.py) - single-pass fused RMSNorm
 
-- [`kernels/attention/softmax_casual_simple.py`](/kernels/attention/softmax_casual_simple.py) - single-pass fused softmax + casual mask
+- [`kernels/attention/softmax_causal_simple.py`](/kernels/attention/softmax_causal_simple.py) - single-pass fused softmax + causal mask
 
 ---
 
@@ -50,7 +50,7 @@ To run benchmarks use:
 make benchmark-rms-norm
 ```
 
-- [`benchmarks/attention/benchmark_softmax_casual.py`](/benchmarks/attention/benchmark_softmax_casual.py)
+- [`benchmarks/attention/benchmark_softmax_causal.py`](/benchmarks/attention/benchmark_softmax_causal.py)
 
 To run benchmarks use:
 ```bash
