@@ -1,6 +1,6 @@
 # Episode 3: Just Fuse It — RMSNorm and Softmax
 
-[Back to Series Overview](README.md) | [Previous: Matmul](ep02-matmul.md) | [Next: RoPE and Attention](ep04-rope-attention.md)
+[Back to Series Overview](README.md) | [Previous: Matmul](ep02-matmul.md) | [Next: RoPE and Attention](ep04-rope.md)
 
 ---
 

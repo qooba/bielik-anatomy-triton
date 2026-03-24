@@ -19,3 +19,7 @@ benchmark-softmax: ## Run softmax benchmark
 
 benchmark-rms-norm: ## Run RMSNorm benchmark
 	PYTHONPATH=. $(PYTHON) benchmarks/normalization/benchmark_rms_norm.py --save-plots --plot-dir=docs/plots/normalization/
+
+benchmark-rope: ## Run RoPE benchmark
+	PYTHONPATH=. $(PYTHON) benchmarks/attention/benchmark_rope_cached.py --save-plots --plot-dir=docs/plots/attention/
+
