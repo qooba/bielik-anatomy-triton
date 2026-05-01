@@ -23,3 +23,6 @@ benchmark-rms-norm: ## Run RMSNorm benchmark
 benchmark-rope: ## Run RoPE benchmark
 	PYTHONPATH=. $(PYTHON) benchmarks/attention/benchmark_rope_cached.py --save-plots --plot-dir=docs/plots/attention/
 
+benchmark-flash-attention: ## Run Flash Attention benchmark
+	PYTHONPATH=. $(PYTHON) benchmarks/attention/benchmark_flash_attention.py --save-plots --plot-dir=docs/plots/attention/
+

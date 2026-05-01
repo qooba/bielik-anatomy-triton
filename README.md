@@ -14,6 +14,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 | 02 | [Matmul - Heart of the Transformer](/docs/ep02-matmul.md) | Tiled matmul with Tensor Cores, matching PyTorch perf | [link](/docs/ep02-matmul.md) |
 | 03 | [Fused kernels - RMSNorm & Softmax](/docs/ep03-rmsnorm-softmax-fused.md) | Fused single-pass RMSNorm and Softmax with causal mask  | [link](/docs/ep03-rmsnorm-softmax-fused.md) |
 | 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) |
+| 05 | [Flash Attention v2](/docs/ep04-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) |
 ---
 
 ## What You Will Learn
