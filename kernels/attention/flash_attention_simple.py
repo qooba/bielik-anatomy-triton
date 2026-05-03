@@ -30,6 +30,7 @@ def _flash_attention_fwd_kernel(
     HEAD_DIM,
     sm_scale,
     IS_CAUSAL: tl.constexpr,
+    STORE_STATS: tl.constexpr,
     BLOCK_M: tl.constexpr,
     BLOCK_N: tl.constexpr,
     BLOCK_DMODEL: tl.constexpr,
@@ -43,7 +44,8 @@ def _flash_attention_fwd_kernel(
     off_h_kv = off_h // (H // H_KV)
 
     q_offset = off_z * stride_qz + off_h * stride_qh
-    kv_offset = off_z * stride_kz + off_h_kv * stride_kh
+    k_offset = off_z * stride_kz + off_h_kv * stride_kh
+    v_offset = off_z * stride_vz + off_h_kv * stride_vh
     o_offset = off_z * stride_oz + off_h * stride_oh
 
     offs_m = start_m * BLOCK_M + tl.arange(0, BLOCK_M)
@@ -67,7 +69,7 @@ def _flash_attention_fwd_kernel(
     for start_n in range(lo, hi, BLOCK_N):
         start_n = tl.multiple_of(start_n, BLOCK_N)
 
-        k_ptrs = K + kv_offset + (start_n + offs_n[:, None]) * stride_kn + offs_d[None, :] * stride_kk
+        k_ptrs = K + k_offset + (start_n + offs_n[:, None]) * stride_kn + offs_d[None, :] * stride_kk
         k_mask = ((start_n + offs_n[:, None]) < N_CTX) & (offs_d[None, :] < HEAD_DIM)
         k = tl.load(k_ptrs, mask=k_mask, other=0.0)
 
@@ -94,7 +96,7 @@ def _flash_attention_fwd_kernel(
         alpha = tl.exp(m_i - m_i_new)
         l_i = l_i * alpha + tl.sum(p, axis=1)
 
-        v_ptrs = V + kv_offset + (start_n + offs_n[:, None]) * stride_vn + offs_d[None, :] * stride_vk
+        v_ptrs = V + v_offset + (start_n + offs_n[:, None]) * stride_vn + offs_d[None, :] * stride_vk
         v_mask = ((start_n + offs_n[:, None]) < N_CTX) & (offs_d[None, :] < HEAD_DIM)
         v = tl.load(v_ptrs, mask=v_mask, other=0.0)
 
@@ -110,7 +112,7 @@ def _flash_attention_fwd_kernel(
     o_mask = (offs_m[:, None] < N_CTX) & (offs_d[None, :] < HEAD_DIM)
     tl.store(o_ptrs, acc.to(O.dtype.element_ty), mask=o_mask)
 
-    if L is not None and M is not None:
+    if STORE_STATS:
         l_ptrs = L + off_hz * N_CTX + offs_m
         m_ptrs = M + off_hz * N_CTX + offs_m
         tl.store(l_ptrs, l_i, mask=offs_m < N_CTX)
@@ -123,6 +125,7 @@ def flash_attention_forward(
     v: torch.Tensor,
     causal: bool = True,
     sm_scale: float = None,
+    store_stats: bool = False,
 ) -> torch.Tensor:
     assert q.is_cuda and k.is_cuda and v.is_cuda, "All inputs must be on CUDA"
     assert q.ndim == 4 and k.ndim == 4 and v.ndim == 4, "Expected 4D tensors (batch, heads, seq_len, head_dim)"
@@ -161,6 +164,7 @@ def flash_attention_forward(
         head_dim,
         sm_scale,
         IS_CAUSAL=causal,
+        STORE_STATS=store_stats,
         BLOCK_DMODEL=BLOCK_DMODEL,
     )
 
