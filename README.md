@@ -15,6 +15,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 | 03 | [Fused kernels - RMSNorm & Softmax](/docs/ep03-rmsnorm-softmax-fused.md) | Fused single-pass RMSNorm and Softmax with causal mask  | [link](/docs/ep03-rmsnorm-softmax-fused.md) |
 | 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) |
 | 05 | [Flash Attention v2](/docs/ep05-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) |
+| 06 | [SwiGLU FFN](/docs/ep06-feed-forward-network.md) | SwiGLU Feed Forward Network | [link](/docs/ep06-feed-forward-network.md) |
 ---
 
 ## What You Will Learn
