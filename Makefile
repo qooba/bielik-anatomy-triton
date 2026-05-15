@@ -26,3 +26,6 @@ benchmark-rope: ## Run RoPE benchmark
 benchmark-flash-attention: ## Run Flash Attention benchmark
 	PYTHONPATH=. $(PYTHON) benchmarks/attention/benchmark_flash_attention.py --save-plots --plot-dir=docs/plots/attention/
 
+benchmark-swiglu: ## Run SwiGLU benchmark
+	PYTHONPATH=. $(PYTHON) benchmarks/ffn/benchmark_swiglu_fused.py --save-plots --plot-dir=docs/plots/ffn/
+
