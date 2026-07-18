@@ -16,6 +16,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 | 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) |
 | 05 | [Flash Attention v2](/docs/ep05-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) |
 | 06 | [SwiGLU FFN](/docs/ep06-feed-forward-network.md) | SwiGLU Feed Forward Network | [link](/docs/ep06-feed-forward-network.md) |
+| 07 | [It's Alive](/docs/ep07-its-alive.md) | It's Alive - Let's talk with Bielik | [link](/docs/ep07-its-alive.md) |
 ---
 
 ## What You Will Learn
@@ -35,6 +36,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 
 ```
 embers/
+├── bielik/                  # Bielik Model using Trtion kernels
 ├── kernels/                 # Triton GPU kernels
 │   ├── matmul/              #   Matrix multiplication variants
 ├── benchmarks/              # Performance benchmarks
