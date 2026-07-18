@@ -57,9 +57,9 @@ Both models consume ~3 GB as expected: 1.5B parameters x 2 bytes (bfloat16).
 ## Relevant Code
 
 ### Kernels
-- [`kernels/embedding_kernel.py`](/kernels/embedding_kernel.py) - embedding lookup kernel
-- [`kernels/matmul_bias_kernel.py`](/kernels/matmul_bias_kernel.py) - tiled matmul with optional bias fusion
-- [`kernels/swiglu_bias_kernel.py`](/kernels/swiglu_bias_kernel.py) - fused SwiGLU gate+up with dual bias
+- [`kernels/embedding/embedding_simple.pykernels/embedding_kernel.py`](/kernels/embedding/embedding_simple.py) - embedding lookup kernel
+- [`kernels/matmul/matmul_bias_tensorcore.py`](/kernels/matmul/matmul_bias_tensorcore.py) - tiled matmul with optional bias fusion
+- [`kernels/ffn/swiglu_fused_bias.py`](/kernels/ffn/swiglu_fused_bias.py) - fused SwiGLU gate+up with dual bias
 
 ### Model
 - [`bielik/model.py`](/bielik/model.py) - `BielikModel`
