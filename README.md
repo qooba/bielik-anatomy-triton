@@ -8,7 +8,7 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 
 ## Series Overview
 
-Each kernel episode has a companion Colab notebook — click the badge to open it and run the correctness check and benchmark on a free GPU, no local setup required.
+Each kernel episode has a companion Colab notebook — click the badge to open it and run the correctness check and benchmark on a free GPU, no local setup required. Episode 7 has a notebook too: it downloads the pretrained weights and runs the full Bielik model end-to-end.
 
 | # | Episode | Key Result | Doc | Colab |
 |---|---------|------------|-----|-------|
@@ -18,7 +18,7 @@ Each kernel episode has a companion Colab notebook — click the badge to open i
 | 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep04-rope.ipynb) |
 | 05 | [Flash Attention v2](/docs/ep05-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep05-flash-attention.ipynb) |
 | 06 | [SwiGLU FFN](/docs/ep06-feed-forward-network.md) | SwiGLU Feed Forward Network | [link](/docs/ep06-feed-forward-network.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep06-swiglu.ipynb) |
-| 07 | [It's Alive](/docs/ep07-its-alive.md) | It's Alive - Let's talk with Bielik | [link](/docs/ep07-its-alive.md) | — |
+| 07 | [It's Alive](/docs/ep07-its-alive.md) | It's Alive - Let's talk with Bielik | [link](/docs/ep07-its-alive.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep07-its-alive.ipynb) |
 ---
 
 ## What You Will Learn
@@ -50,6 +50,10 @@ embers/
 ## Running Kernel Benchmarks on Colab (No GPU Required Locally)
 
 Each kernel has a matching notebook in [`notebooks/`](/notebooks) with a correctness check against a plain PyTorch reference, followed by the full benchmark sweep from `benchmarks/`. Click a badge in the table above (or open a notebook directly) to run it on a free Colab GPU - just make sure to select `Runtime -> Change runtime type -> T4 GPU` first.
+
+[`notebooks/ep07-its-alive.ipynb`](/notebooks/ep07-its-alive.ipynb) goes further: it downloads the pretrained Bielik-1.5B weights and runs the full model - built entirely from the Triton kernels above - to generate real Polish text, including an interactive chat cell.
+
+Free-tier T4 GPUs are Turing (compute capability 7.5) and have no native BF16 tensor cores, so the matmul, flash-attention, SwiGLU, and full-model notebooks will run slower there than the BF16 results in the docs (measured on an RTX 4060 Ti, Ada) - each one calls this out where it matters. Don't switch these to float16 for T4's native FP16 tensor cores to "fix" this: Bielik was trained in bf16, and running the full model in fp16 causes activation overflow across the 32 stacked decoder layers, producing fluent-looking but semantically garbage output. For BF16-accurate and BF16-fast numbers, use an Ampere+ runtime (A100/L4 via Colab Pro).
 
 ## Getting Started
 
