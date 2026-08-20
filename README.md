@@ -8,15 +8,17 @@ A hands-on video series where we implement the Polish language model **Bielik 1.
 
 ## Series Overview
 
-| # | Episode | Key Result | Doc |
-|---|---------|------------|-----|
-| 01 | [Introduction - Bielik Architecture and Triton](/docs/ep01-introduction.md) | Architecture overview, GQA, SwiGLU, why Triton | [link](/docs/ep01-introduction.md) |
-| 02 | [Matmul - Heart of the Transformer](/docs/ep02-matmul.md) | Tiled matmul with Tensor Cores, matching PyTorch perf | [link](/docs/ep02-matmul.md) |
-| 03 | [Fused kernels - RMSNorm & Softmax](/docs/ep03-rmsnorm-softmax-fused.md) | Fused single-pass RMSNorm and Softmax with causal mask  | [link](/docs/ep03-rmsnorm-softmax-fused.md) |
-| 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) |
-| 05 | [Flash Attention v2](/docs/ep05-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) |
-| 06 | [SwiGLU FFN](/docs/ep06-feed-forward-network.md) | SwiGLU Feed Forward Network | [link](/docs/ep06-feed-forward-network.md) |
-| 07 | [It's Alive](/docs/ep07-its-alive.md) | It's Alive - Let's talk with Bielik | [link](/docs/ep07-its-alive.md) |
+Each kernel episode has a companion Colab notebook — click the badge to open it and run the correctness check and benchmark on a free GPU, no local setup required.
+
+| # | Episode | Key Result | Doc | Colab |
+|---|---------|------------|-----|-------|
+| 01 | [Introduction - Bielik Architecture and Triton](/docs/ep01-introduction.md) | Architecture overview, GQA, SwiGLU, why Triton | [link](/docs/ep01-introduction.md) | — |
+| 02 | [Matmul - Heart of the Transformer](/docs/ep02-matmul.md) | Tiled matmul with Tensor Cores, matching PyTorch perf | [link](/docs/ep02-matmul.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep02-matmul.ipynb) |
+| 03 | [Fused kernels - RMSNorm & Softmax](/docs/ep03-rmsnorm-softmax-fused.md) | Fused single-pass RMSNorm and Softmax with causal mask  | [link](/docs/ep03-rmsnorm-softmax-fused.md) | [RMSNorm](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep03-rmsnorm.ipynb) / [Softmax](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep03-softmax-causal.ipynb) |
+| 04 | [RoPE](/docs/ep04-rope.md) | RoPE - Rotary Position Embedding | [link](/docs/ep04-rope.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep04-rope.ipynb) |
+| 05 | [Flash Attention v2](/docs/ep05-flash-attention.md) | Flash Attention | [link](/docs/ep05-flash-attention.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep05-flash-attention.ipynb) |
+| 06 | [SwiGLU FFN](/docs/ep06-feed-forward-network.md) | SwiGLU Feed Forward Network | [link](/docs/ep06-feed-forward-network.md) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qooba/bielik-anatomy-triton/blob/main/notebooks/ep06-swiglu.ipynb) |
+| 07 | [It's Alive](/docs/ep07-its-alive.md) | It's Alive - Let's talk with Bielik | [link](/docs/ep07-its-alive.md) | — |
 ---
 
 ## What You Will Learn
@@ -41,8 +43,13 @@ embers/
 │   ├── matmul/              #   Matrix multiplication variants
 ├── benchmarks/              # Performance benchmarks
 │   ├── matmul/              #   Bechmarks for matmul kernels
+├── notebooks/               # Colab notebooks - one per kernel (correctness check + benchmark)
 └── docs/                    # Episodes docs
 ```
+
+## Running Kernel Benchmarks on Colab (No GPU Required Locally)
+
+Each kernel has a matching notebook in [`notebooks/`](/notebooks) with a correctness check against a plain PyTorch reference, followed by the full benchmark sweep from `benchmarks/`. Click a badge in the table above (or open a notebook directly) to run it on a free Colab GPU - just make sure to select `Runtime -> Change runtime type -> T4 GPU` first.
 
 ## Getting Started
 
